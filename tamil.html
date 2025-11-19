@@ -1,0 +1,4036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Mobiles - Premium Mobile Accessories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+     
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2874f0;
+            --secondary: #fb641b;
+            --light: #f1f3f6;
+            --dark: #212121;
+            --gray: #878787;
+            --white: #ffffff;
+            --success: #388e3c;
+            --warning: #ff9f00;
+            --whatsapp: #25D366;
+            --accent: #ff6161;
+            --background: #f5f5f5;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            color: var(--white);
+            padding: 10px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        .search-bar {
+            display: flex;
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 2px 0 0 2px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-bar button {
+            background: var(--white);
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 2px 2px 0;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+        .nav-links i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .cart-count {
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -5px;
+            right: -8px;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        /* WhatsApp Chat Button */
+        .whatsapp-chat {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .whatsapp-button {
+            background-color: var(--whatsapp);
+            color: rgb(40, 220, 172);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-tooltip {
+            background: var(--dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .whatsapp-chat:hover .whatsapp-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .page {
+            display: none;
+            background: var(--white);
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 20px;
+            min-height: 500px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Home Page Styles */
+        .banner {
+            background: linear-gradient(to right, var(--accent), #ff9f7f);
+            height: 200px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            background: var(--white);
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category i {
+            font-size: 30px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .category h3 {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: var(--white);
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product .price {
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .product .original-price {
+            color: var(--gray);
+            text-decoration: line-through;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .product .discount {
+            color: var(--success);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .product .rating {
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+
+        .product button {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .product button:hover {
+            background: #1c64d8;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* About Page Styles */
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 200px;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark);
+            display: block;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .mission-vision {
+            display: flex;
+            gap: 30px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .mission, .vision {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .mission {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 5px solid var(--primary);
+        }
+
+        .vision {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .mission h2, .vision h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission h2 i {
+            color: var(--primary);
+        }
+
+        .vision h2 i {
+            color: var(--secondary);
+        }
+
+        .values-section {
+            margin: 50px 0;
+        }
+
+        .values-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+            font-size: 2rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .value-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: rgba(40, 116, 240, 0.1);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .value-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .timeline-section {
+            margin: 60px 0;
+        }
+
+        .timeline-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+            font-size: 2rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .team-section {
+            margin: 60px 0;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+            font-size: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-img {
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-img i {
+            font-size: 5rem;
+            color: white;
+        }
+
+        .team-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .team-info p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 60px 0 30px;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e05515;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Contact Page Styles */
+        .contact-hero {
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            animation: slideDown 1s ease-out;
+        }
+
+        .contact-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .contact-info h3, .contact-form h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .contact-details {
+            margin-bottom: 20px;
+        }
+
+        .contact-details div {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(40, 116, 240, 0.05);
+            transition: all 0.3s;
+        }
+
+        .contact-details div:hover {
+            background: rgba(40, 116, 240, 0.1);
+            transform: translateX(5px);
+        }
+
+        .contact-details i {
+            color: var(--primary);
+            width: 20px;
+            margin-top: 3px;
+            font-size: 1.2rem;
+        }
+
+        .contact-form input, .contact-form textarea, .contact-form select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(40, 116, 240, 0.2);
+            outline: none;
+        }
+
+        .contact-form button {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .contact-form button:hover {
+            background: #1c64d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-form button:active {
+            transform: translateY(0);
+        }
+
+        .location-section {
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .location-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary);
+            transition: all 0.3s;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .location-card h4 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .location-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .location-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .location-info p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .location-info i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        .location-map {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-map::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .location-map i {
+            font-size: 3rem;
+            z-index: 1;
+        }
+
+        .map-text {
+            z-index: 1;
+            text-align: center;
+        }
+
+        .map-text p {
+            margin-top: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.5s, slideOutRight 0.5s 2.5s;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Login/Register Page Styles */
+        .auth-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .auth-form-container {
+            display: none;
+        }
+
+        .auth-form-container.active {
+            display: block;
+        }
+
+        .auth-form-group {
+            margin-bottom: 20px;
+        }
+
+        .auth-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .auth-form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .auth-form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.1);
+        }
+
+        .auth-message {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .auth-message.show {
+            display: block;
+        }
+
+        .auth-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .auth-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .admin-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Admin Dashboard Styles */
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            color: white;
+            padding: 20px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .admin-header h2 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .admin-stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .admin-stat-card i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .admin-stat-card .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .admin-stat-card .label {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .admin-users-section {
+            margin-top: 20px;
+        }
+
+        .admin-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .admin-section-header h3 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        .admin-search-box {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        .admin-search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .admin-users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .admin-users-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .admin-users-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .admin-users-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .admin-action-btn {
+            padding: 6px 12px;
+            margin: 0 3px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .admin-btn-view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-btn-view:hover {
+            background: #1c64d8;
+        }
+
+        .admin-btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .admin-btn-delete:hover {
+            background: #c82333;
+        }
+
+        /* Profile Modal Styles */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-modal.active {
+            display: flex;
+        }
+
+        .profile-modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
+        }
+
+        .profile-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .profile-modal-header h3 {
+            color: #333;
+            font-size: 22px;
+        }
+
+        .profile-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .profile-close-btn:hover {
+            color: #333;
+        }
+
+        .profile-detail-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .profile-detail-item label {
+            display: block;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .profile-detail-item .value {
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Cart Page Styles */
+        .cart-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cart-items {
+            flex: 2;
+        }
+
+        .cart-summary {
+            flex: 1;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .cart-item {
+            display: flex;
+            background: var(--white);
+            padding: 15px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .cart-item-details .price {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity button {
+            background: var(--light);
+            border: 1px solid #ddd;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .cart-summary h3 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        /* Checkout Page Styles */
+        .checkout-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .checkout-form {
+            flex: 2;
+        }
+
+        .order-summary {
+            flex: 1;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        /* Orders Page Styles */
+        .orders-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .order-header {
+            background: var(--light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .order-date {
+            color: var(--gray);
+        }
+
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-delivered {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-processing {
+            background: var(--warning);
+            color: white;
+        }
+
+        .status-shipped {
+            background: var(--primary);
+            color: white;
+        }
+
+        .order-items {
+            padding: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .order-item-img {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .order-item-price {
+            color: var(--dark);
+            font-weight: bold;
+        }
+
+        .order-summary-section {
+            background: var(--light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+        }
+
+        .order-total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Offers Page Styles */
+        .offers-hero {
+            background: linear-gradient(135deg, var(--warning), var(--secondary));
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .offers-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .offers-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .offer-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), #1a5dc7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .offer-content {
+            padding: 20px;
+        }
+
+        .offer-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .offer-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .offer-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .offer-expiry {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* WhatsApp Order Section */
+        .whatsapp-order-section {
+            background: linear-gradient(135deg, var(--whatsapp), #128C7E);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .whatsapp-order-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-order-section p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-order-btn {
+            background: white;
+            color: var(--whatsapp);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            color: var(--gray);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                order: 3;
+                width: 100%;
+                max-width: 100%;
+                margin: 10px 0;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .timeline-item:nth-child(odd)::after {
+                right: auto;
+            }
+
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-hero p {
+                font-size: 1rem;
+            }
+
+            .cart-container, .checkout-container, .contact-container {
+                flex-direction: column;
+            }
+
+            .categories {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .whatsapp-chat {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .whatsapp-button {
+                width: 55px;
+                height: 55px;
+                font-size: 26px;
+            }
+            
+            .whatsapp-tooltip {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "7S4MqM6-j43t45O2Z",
+            });
+        })();
+    </script>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- WhatsApp Chat Button -->
+    <div class="whatsapp-chat">
+        <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+        <div class="whatsapp-button" onclick="openWhatsApp()">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo" onclick="showPage('home')">
+                <i class="fas fa-mobile-alt"></i>
+                <h1>Tamil Mobiles</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for mobile accessories...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-links">
+                <a onclick="showPage('home')"><i class="fas fa-home"></i> Home</a>
+                <a onclick="showPage('offers')"><i class="fas fa-tags"></i> Offers</a>
+                <a onclick="showPage('about')"><i class="fas fa-info-circle"></i> About</a>
+                <a onclick="showPage('contact')"><i class="fas fa-envelope"></i> Contact</a>
+                <a onclick="showPage('orders')"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                <a id="authLink" onclick="showPage('login')"><i class="fas fa-user"></i> Login</a>
+                <a id="adminLink" onclick="showPage('admin-login')" style="display:none;"><i class="fas fa-user-shield"></i> Admin</a>
+                <a onclick="showPage('cart')" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="banner">
+                Great Deals on Mobile Accessories
+            </div>
+            
+            <div class="categories">
+                <div class="category" onclick="filterProducts('headphones')">
+                    <i class="fas fa-headphones"></i>
+                    <h3>Headphones</h3>
+                </div>
+                <div class="category" onclick="filterProducts('cases')">
+                    <i class="fas fa-mobile"></i>
+                    <h3>Phone Cases</h3>
+                </div>
+                <div class="category" onclick="filterProducts('chargers')">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Chargers</h3>
+                </div>
+                <div class="category" onclick="filterProducts('powerbanks')">
+                    <i class="fas fa-database"></i>
+                    <h3>Power Banks</h3>
+                </div>
+                <div class="category" onclick="filterProducts('watches')">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Smart Watches</h3>
+                </div>
+                <div class="category" onclick="filterProducts('memory')">
+                    <i class="fas fa-sd-card"></i>
+                    <h3>Memory Cards</h3>
+                </div>
+                <div class="category" onclick="filterProducts('screenprotectors')">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Screen Protectors</h3>
+                </div>
+            </div>
+            
+            <h2 style="margin: 20px 0;">Featured Products</h2>
+            <div class="products" id="productsContainer">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+
+        <!-- Offers Page -->
+        <div id="offers" class="page">
+            <section class="offers-hero">
+                <h1>Special Offers & Deals</h1>
+                <p>Get the best deals on premium mobile accessories. Limited time offers with amazing discounts!</p>
+            </section>
+
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">FLAT 40% OFF</div>
+                        <h3>Wireless Headphones</h3>
+                        <p>Premium quality wireless headphones with noise cancellation. Limited time offer!</p>
+                        <div class="offer-expiry">Valid until: 30th November 2023</div>
+                    </div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">BUY 1 GET 1 FREE</div>
+                        <h3>Phone Cases</h3>
+                        <p>Get two premium phone cases for the price of one. Choose from various designs.</p>
+                        <div class="offer-expiry">Valid until: 25th December 2023</div>
+                    </div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">UP TO 50% OFF</div>
+                        <h3>Fast Chargers</h3>
+                        <p>Super fast charging adapters and cables. Compatible with all devices.</p>
+                        <div class="offer-expiry">Valid until: 15th January 2024</div>
+                    </div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">FLAT ₹500 OFF</div>
+                        <h3>Power Banks</h3>
+                        <p>High capacity power banks with fast charging technology. Never run out of battery!</p>
+                        <div class="offer-expiry">Valid until: 10th December 2023</div>
+                    </div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-sd-card"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">MEMORY SALE</div>
+                        <h3>Memory Cards</h3>
+                        <p>High-speed memory cards with large storage capacity. Perfect for your devices.</p>
+                        <div class="offer-expiry">Valid until: 20th November 2023</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+                  <div class="offer-card">
+                    <div class="offer-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="offer-content">
+                        <div class="offer-tag">SPECIAL DISCOUNT</div>
+                        <h3>Smart Watches</h3>
+                        <p>Feature-rich smart watches with health monitoring and long battery life.</p>
+                        <div class="offer-expiry">Valid until: 5th January 2024</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <!-- Hero Section -->
+            <section class="about-hero">
+                <h1>About Tamil Mobiles</h1>
+                <p>Your trusted partner for premium mobile accessories since 2015. We're committed to enhancing your mobile experience with quality products and exceptional service.</p>
+            </section>
+            
+            <!-- Team Section -->
+            <section class="team-section">
+                <h2>Meet Our Leadership</h2>
+                                        
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="tamil.jpg" alt="POONTHAMILAN S">
+                        </div>
+                        <div class="team-info">
+                            <h3>POONTHAMILAN S</h3>
+                            <p>Founder & CEO</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="Screenshot_1-11-2025_104310_www.instagram.com.jpeg" alt="MOHAN KUMAR S">
+                        </div>
+                        <div class="team-info">
+                            <h3>MOHAN KUMAR S</h3>
+                            <p>Sales Executive</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <span class="number">500K+</span>
+                    <span class="label">Happy Customers</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="number">50+</span>
+                    <span class="label">Store Locations</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-box-open"></i>
+                    <span class="number">1000+</span>
+                    <span class="label">Products</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-award"></i>
+                    <span class="number">25+</span>
+                    <span class="label">Awards Won</span>
+                </div>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="mission-vision">
+                <div class="mission">
+                    <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+                    <p>To make premium mobile accessories accessible to everyone by offering high-quality products at affordable prices, backed by exceptional customer service and fast delivery.</p>
+                </div>
+                <div class="vision">
+                    <h2><i class="fas fa-eye"></i> Our Vision</h2>
+                    <p>To become India's most trusted mobile accessories brand, recognized for innovation, quality, and customer satisfaction while expanding our reach across the country.</p>
+                </div>
+            </section>
+
+            <!-- Values Section -->
+            <section class="values-section">
+                <h2>Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Quality</h3>
+                        <p>We never compromise on quality. Every product undergoes rigorous testing to ensure it meets our high standards.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h3>Customer First</h3>
+                        <p>Our customers are at the heart of everything we do. Their satisfaction is our ultimate goal.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Innovation</h3>
+                        <p>We continuously explore new technologies and designs to bring you the latest in mobile accessories.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-truck"></i>
+                        <h3>Fast Delivery</h3>
+                        <p>We understand the importance of timely delivery and ensure your orders reach you as quickly as possible.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section class="timeline-section">
+                <h2>Our Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2015</h3>
+                            <p>Tamil Mobiles was founded with a single store in Chennai, focusing on quality mobile accessories.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2017</h3>
+                            <p>Expanded to 10 stores across Tamil Nadu and launched our e-commerce website.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2019</h3>
+                            <p>Reached 100,000 customers and introduced our exclusive brand of accessories.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2021</h3>
+                            <p>Expanded to other South Indian states and crossed 1 million products sold.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>2023</h3>
+                            <p>Launched innovative smart accessories and crossed 500,000 happy customers.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2>Ready to Enhance Your Mobile Experience?</h2>
+                <p>Join over 500,000 satisfied customers who trust Tamil Mobiles for their mobile accessory needs.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showPage('home')">Shop Now</button>
+                    <button class="btn btn-outline" onclick="showPage('contact')">Contact Us</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <!-- Hero Section -->
+            <section class="contact-hero">
+                <h1>Get In Touch With Us</h1>
+                <p>We're here to help with any questions about our products or services. Reach out to us and we'll respond as soon as possible.</p>
+            </section>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-details">
+                        <div>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Nandhavan Theru, Old Bus Stand,<br>Opposite to Kamatchi Amman Jewellery,<br>Namakkal, Tamil Nadu - 637001</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 81244 76063</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-envelope"></i>
+                            <span>sabarishcse23@gmail.com</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-clock"></i>
+                            <span>Monday - Saturday: 9:00 AM - 8:00 PM<br>Sunday: 10:00 AM - 6:00 PM</span>
+                        </div>
+                    </div>
+                    
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="subject" required>
+                                <option value="" disabled selected>Select Subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="product">Product Information</option>
+                                <option value="support">Technical Support</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="feedback">Feedback</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Location Section -->
+            <section class="location-section">
+                <h3>Our Location</h3>
+                <div class="location-card">
+                    <h4>Tamil Mobiles - Namakkal Store</h4>
+                    <div class="location-details">
+                        <div class="location-info">
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Nandhavan Theru, Old Bus Stand, Opposite to Kamatchi Amman Jewellery, Namakkal, Tamil Nadu - 637001</p>
+                            <p><i class="fas fa-phone"></i> <strong>Phone:</strong> +91 81244 76063</p>
+                            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> sabarishcse23@gmail.com</p>
+                            <p><i class="fas fa-clock"></i> <strong>Hours:</strong> Mon-Sat: 9AM-8PM, Sun: 10AM-6PM</p>
+                            <p><i class="fas fa-landmark"></i> <strong>Landmark:</strong> Opposite to Kamatchi Amman Jewellery, Near Old Bus Stand</p>
+                        </div>
+                        <div class="location-map">
+                            <div class="map-text">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <p>Namakkal Location</p>
+                                <p>Click for Directions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login/Register Page -->
+        <div id="login" class="page">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2><i class="fas fa-mobile-alt"></i> Tamil Mobiles</h2>
+                    <p>Login or Create an Account</p>
+                </div>
+
+                <div class="auth-message" id="authMessage"></div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginFormContainer" class="auth-form-container active">
+                    <form id="loginForm" onsubmit="handleUserLogin(event)">
+                        <div class="auth-form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600;">Login</button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerFormContainer" class="auth-form-container">
+                    <form id="registerForm" onsubmit="handleUserRegister(event)">
+                        <div class="auth-form-group">
+                            <label for="regName">Full Name</label>
+                            <input type="text" id="regName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="regEmail">Email Address</label>
+                            <input type="email" id="regEmail" placeholder="Enter your email" required>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="regPhone">Phone Number</label>
+                            <input type="tel" id="regPhone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="regConfirmPassword">Confirm Password</label>
+                            <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required>
+                        </div>
+                        <button type="submit" class="btn" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600;">Create Account</button>
+                    </form>
+                </div>
+
+                <div class="admin-link">
+                    <a href="#" onclick="showPage('admin-login'); return false;">Admin Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Login Page -->
+        <div id="admin-login" class="page">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+                    <p>Access the admin dashboard</p>
+                </div>
+
+                <div class="auth-message" id="adminLoginMessage"></div>
+ 
+
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                    <div class="auth-form-group">
+                        <label for="adminEmail">Email Address</label>
+                        <input type="email" id="adminEmail" placeholder="Enter admin email" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="btn" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600;">Login as Admin</button>
+                </form>
+
+                <div class="admin-link">
+                    <a href="#" onclick="showPage('login'); return false;"><i class="fas fa-arrow-left"></i> Back to User Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Page -->
+        <div id="admin-dashboard" class="page">
+            <div class="admin-header">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h2><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
+                        <p id="adminWelcome" style="color:rgba(255,255,255,0.9);">Welcome, Admin</p>
+                    </div>
+                    <div>
+                        <button onclick="showPage('home')" class="btn" style="background:white; color:var(--primary); margin-right:10px;">Back to Home</button>
+                        <button onclick="handleAdminLogout()" class="btn" style="background:#dc3545; color:white;">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-message" id="adminMessage"></div>
+
+            <div class="admin-stats">
+                <div class="admin-stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="number" id="adminTotalUsers">0</div>
+                    <div class="label">Total Users</div>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fas fa-user-plus"></i>
+                    <div class="number" id="adminNewUsers">0</div>
+                    <div class="label">New This Month</div>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fas fa-calendar-day"></i>
+                    <div class="number" id="adminTodayUsers">0</div>
+                    <div class="label">Registered Today</div>
+                </div>
+            </div>
+
+            <div class="admin-users-section">
+                <div class="admin-section-header">
+                    <h3><i class="fas fa-list"></i> All Registered Users</h3>
+                    <input type="text" class="admin-search-box" id="adminSearchBox" placeholder="Search users..." onkeyup="filterAdminUsers()">
+                </div>
+
+                <table class="admin-users-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Registered Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersTableBody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div class="profile-modal" id="profileModal">
+            <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                    <h3><i class="fas fa-user-circle"></i> User Profile Details</h3>
+                    <button class="profile-close-btn" onclick="closeProfileModal()">&times;</button>
+                </div>
+                <div id="profileDetails">
+                    <!-- Profile details will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cart" class="page">
+            <h2>Shopping Cart</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be dynamically loaded here -->
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="shipping">₹50</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span id="tax">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span id="discount">-₹0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">₹50</span>
+                    </div>
+                    <button class="checkout-btn" onclick="showPage('checkout')">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkout" class="page">
+            <h2>Checkout</h2>
+            <div class="checkout-container">
+                <div class="checkout-form">
+                    <h3>Shipping Information</h3>
+                    <form id="checkoutForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <select id="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="tamilnadu">Tamil Nadu</option>
+                                    <option value="kerala">Kerala</option>
+                                    <option value="karnataka">Karnataka</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode">PIN Code</label>
+                                <input type="text" id="pincode" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" required value="8124476063">
+                        </div>
+                        
+                        <!-- WhatsApp Order Section -->
+                        <div class="whatsapp-order-section">
+                            <h3>Complete Your Order via WhatsApp</h3>
+                            <p>We'll send your order details to our WhatsApp number for confirmation and cash on delivery</p>
+                            <button type="submit" class="whatsapp-order-btn">
+                                <i class="fab fa-whatsapp"></i> Place Order via WhatsApp
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutItems">
+                        <!-- Checkout items will be dynamically loaded here -->
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="checkoutSubtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="checkoutShipping">₹50</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span id="checkoutTax">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span id="checkoutDiscount">-₹0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="checkoutTotal">₹50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Page -->
+        <div id="orders" class="page">
+            <h2>My Orders</h2>
+            <div class="orders-container" id="ordersContainer">
+                <!-- Orders will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Mobile Cases</a></li>
+                    <li><a href="#">Headphones</a></li>
+                    <li><a href="#">Chargers</a></li>
+                    <li><a href="#">Power Banks</a></li>
+                    <li><a href="#">Smart Watches</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                    <li><a href="#">Track Your Order</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Stay Connected</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Tamil Mobiles. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Authentication and User Management System using localStorage
+        const Auth = {
+            // Initialize default admin account
+            init: function() {
+                // Check if admin exists, if not create default admin
+                const admin = this.getAdmin();
+                if (!admin) {
+                    const defaultAdmin = {
+                        email: 'admin@tamilmobiles.com',
+                        password: 'admin123',
+                        name: 'Admin',
+                        role: 'admin',
+                        createdAt: new Date().toISOString()
+                    };
+                    localStorage.setItem('tm_admin', JSON.stringify(defaultAdmin));
+                }
+
+                // Initialize users array if it doesn't exist
+                if (!localStorage.getItem('tm_users')) {
+                    localStorage.setItem('tm_users', JSON.stringify([]));
+                }
+            },
+
+            // Admin Authentication
+            adminLogin: function(email, password) {
+                const admin = this.getAdmin();
+                if (admin && admin.email === email && admin.password === password) {
+                    const session = {
+                        email: admin.email,
+                        name: admin.name,
+                        role: 'admin',
+                        loginTime: new Date().toISOString()
+                    };
+                    localStorage.setItem('tm_admin_session', JSON.stringify(session));
+                    return true;
+                }
+                return false;
+            },
+
+            // Check if admin is logged in
+            isAdminLoggedIn: function() {
+                return localStorage.getItem('tm_admin_session') !== null;
+            },
+
+            // Get current admin session
+            getAdminSession: function() {
+                const session = localStorage.getItem('tm_admin_session');
+                return session ? JSON.parse(session) : null;
+            },
+
+            // Admin logout
+            adminLogout: function() {
+                localStorage.removeItem('tm_admin_session');
+            },
+
+            // Get admin data
+            getAdmin: function() {
+                const admin = localStorage.getItem('tm_admin');
+                return admin ? JSON.parse(admin) : null;
+            },
+
+            // User Registration
+            register: function(name, email, phone, password) {
+                // Check if user already exists
+                const users = this.getUsers();
+                const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+                
+                if (existingUser) {
+                    return false; // User already exists
+                }
+
+                // Create new user
+                const newUser = {
+                    id: 'USER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name: name,
+                    email: email.toLowerCase(),
+                    phone: phone,
+                    password: password, // In production, this should be hashed
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                users.push(newUser);
+                this.saveUsers(users);
+                return true;
+            },
+
+            // User Login
+            login: function(email, password) {
+                const users = this.getUsers();
+                const user = users.find(u => 
+                    u.email.toLowerCase() === email.toLowerCase() && 
+                    u.password === password
+                );
+
+                if (user) {
+                    const session = {
+                        userId: user.id,
+                        email: user.email,
+                        name: user.name,
+                        role: 'user',
+                        loginTime: new Date().toISOString()
+                    };
+                    localStorage.setItem('tm_user_session', JSON.stringify(session));
+                    return true;
+                }
+                return false;
+            },
+
+            // Check if user is logged in
+            isLoggedIn: function() {
+                return localStorage.getItem('tm_user_session') !== null;
+            },
+
+            // Get current user session
+            getUserSession: function() {
+                const session = localStorage.getItem('tm_user_session');
+                return session ? JSON.parse(session) : null;
+            },
+
+            // User logout
+            logout: function() {
+                localStorage.removeItem('tm_user_session');
+            },
+
+            // Get all users
+            getUsers: function() {
+                const users = localStorage.getItem('tm_users');
+                return users ? JSON.parse(users) : [];
+            },
+
+            // Save users array
+            saveUsers: function(users) {
+                localStorage.setItem('tm_users', JSON.stringify(users));
+            },
+
+            // Get user by ID
+            getUserById: function(userId) {
+                const users = this.getUsers();
+                return users.find(u => u.id === userId);
+            },
+
+            // Delete user
+            deleteUser: function(userId) {
+                const users = this.getUsers();
+                const filteredUsers = users.filter(u => u.id !== userId);
+                this.saveUsers(filteredUsers);
+                return true;
+            },
+
+            // Update user
+            updateUser: function(userId, updates) {
+                const users = this.getUsers();
+                const userIndex = users.findIndex(u => u.id === userId);
+                
+                if (userIndex !== -1) {
+                    users[userIndex] = {
+                        ...users[userIndex],
+                        ...updates,
+                        updatedAt: new Date().toISOString()
+                    };
+                    this.saveUsers(users);
+                    return true;
+                }
+                return false;
+            },
+
+            // Get user statistics
+            getStats: function() {
+                const users = this.getUsers();
+                const now = new Date();
+                const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+                const newThisMonth = users.filter(u => {
+                    const created = new Date(u.createdAt);
+                    return created >= startOfMonth;
+                }).length;
+
+                const todayUsers = users.filter(u => {
+                    const created = new Date(u.createdAt);
+                    return created >= startOfDay;
+                }).length;
+
+                return {
+                    total: users.length,
+                    newThisMonth: newThisMonth,
+                    today: todayUsers
+                };
+            }
+        };
+
+        // Initialize Auth on load
+        Auth.init();
+        
+        // Make Auth available globally as 'auth' (lowercase)
+        const auth = Auth;
+        window.auth = Auth;
+
+        // Product data with manual images
+        const products = [
+            {
+                id: 1,
+                name: "Wireless Bluetooth Earphones",
+                price: 1299,
+                originalPrice: 1999,
+                category: "headphones",
+                image: "headphones.jpg",
+                rating: 4.5,
+                badge: "Bestseller"
+            },
+            {
+                id: 2,
+                name: "Shockproof Phone Case",
+                price: 499,
+                originalPrice: 799,
+                category: "cases",
+                image: "phone-case.jpg",
+                rating: 4,
+                badge: "Trending"
+            },
+            {
+                id: 3,
+                name: "10000mAh Power Bank",
+                price: 1599,
+                originalPrice: 2299,
+                category: "powerbanks",
+                image: "powerbank.jpg",
+                rating: 5,
+                badge: "Bestseller"
+            },
+            {
+                id: 4,
+                name: "Smart Watch with Fitness Tracker",
+                price: 2499,
+                originalPrice: 3999,
+                category: "watches",
+                image: "smartwatch.jpg",
+                rating: 4.5,
+                badge: "New"
+            },
+            {
+                id: 5,
+                name: "Fast Charging Adapter",
+                price: 799,
+                originalPrice: 1299,
+                category: "chargers",
+                image: "charger.jpg",
+                rating: 4,
+                badge: "Limited Deal"
+            },
+            {
+                id: 6,
+                name: "128GB MicroSD Card",
+                price: 1199,
+                originalPrice: 1799,
+                category: "memory",
+                image: "memory-card.jpg",
+                rating: 4.5,
+                badge: "Bestseller"
+            },
+            {
+                id: 7,
+                name: "Noise Cancelling Headphones",
+                price: 2999,
+                originalPrice: 4999,
+                category: "headphones",
+                image: "noise-cancelling.jpg",
+                rating: 4,
+                badge: "Premium"
+            },
+            {
+                id: 8,
+                name: "Tempered Glass Screen Protector",
+                price: 299,
+                originalPrice: 499,
+                category: "screenprotectors",
+                image: "screen-protector.jpg",
+                rating: 4.5,
+                badge: "Essential"
+            },
+            {
+                id: 9,
+                name: "Wireless Charging Pad",
+                price: 1499,
+                originalPrice: 2199,
+                category: "chargers",
+                image: "wireless-charger.jpg",
+                rating: 4,
+                badge: "New"
+            },
+            {
+                id: 10,
+                name: "Bluetooth Speaker",
+                price: 1999,
+                originalPrice: 2999,
+                category: "headphones",
+                image: "bluetooth-speaker.jpg",
+                rating: 4.5,
+                badge: "Popular"
+            },
+            {
+                id: 11,
+                name: "Car Phone Holder",
+                price: 399,
+                originalPrice: 699,
+                category: "cases",
+                image: "car-holder.jpg",
+                rating: 4,
+                badge: "Essential"
+            },
+            {
+                id: 12,
+                name: "USB-C Cable (3 Pack)",
+                price: 599,
+                originalPrice: 999,
+                category: "chargers",
+                image: "usb-cable.jpg",
+                rating: 4.5,
+                badge: "Value Pack"
+            }
+            
+        ];
+
+        // Cart data
+        let cart = [];
+        let orders = [];
+        let currentFilter = 'all';
+
+        // DOM Elements
+        const productsContainer = document.getElementById('productsContainer');
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const subtotal = document.getElementById('subtotal');
+        const tax = document.getElementById('tax');
+        const discount = document.getElementById('discount');
+        const total = document.getElementById('total');
+        const checkoutItems = document.getElementById('checkoutItems');
+        const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+        const checkoutTax = document.getElementById('checkoutTax');
+        const checkoutDiscount = document.getElementById('checkoutDiscount');
+        const checkoutTotal = document.getElementById('checkoutTotal');
+        const toast = document.getElementById('toast');
+        const ordersContainer = document.getElementById('ordersContainer');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+            renderProducts();
+            updateCart();
+            renderOrders();
+            updateAuthUI();
+
+            // Add event listeners to forms
+            document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+            document.getElementById('checkoutForm').addEventListener('submit', handleCheckoutSubmit);
+            
+            // Check if we're on admin dashboard page
+            if (window.location.hash === '#admin-dashboard' || document.getElementById('admin-dashboard').classList.contains('active')) {
+                initAdminDashboard();
+            }
+        });
+
+        // WhatsApp Chat Function
+        function openWhatsApp() {
+            const phoneNumber = "918124476063";
+            const message = "Hello Tamil Mobiles! I would like to know more about your products.";
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Function to show the selected page and hide others
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Auth guard for protected pages
+            const protectedPages = ['orders', 'checkout'];
+            if (protectedPages.includes(pageId) && !isLoggedIn()) {
+                showToast('Please login to continue');
+                showPage('login');
+                return;
+            }
+
+            // Auth guard for admin dashboard
+            if (pageId === 'admin-dashboard') {
+                if (!auth.isAdminLoggedIn()) {
+                    showToast('Please login as admin to access dashboard');
+                    showPage('admin-login');
+                    return;
+                }
+                initAdminDashboard();
+            }
+
+            // Show the selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update cart if needed
+            if (pageId === 'cart' || pageId === 'checkout') {
+                updateCart();
+            }
+            
+            // Update orders if needed
+            if (pageId === 'orders') {
+                renderOrders();
+            }
+        }
+
+        // Function to render products
+        function renderProducts() {
+            productsContainer.innerHTML = '';
+            
+            const filteredProducts = currentFilter === 'all' 
+                ? products 
+                : products.filter(product => product.category === currentFilter);
+            
+            filteredProducts.forEach(product => {
+                const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    <div class="product-img" style="height:150px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                        <i class="fas fa-mobile-alt" style="font-size:3rem;color:#2874f0;"></i>
+                    </div>
+                    <h3>${product.name}</h3>
+                    <div class="price">
+                        <span class="original-price">₹${product.originalPrice}</span>
+                        ₹${product.price}
+                        <span class="discount">${discountPercent}% off</span>
+                    </div>
+                    <div class="rating">
+                        ${generateStars(product.rating)}
+                    </div>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productsContainer.appendChild(productElement);
+            });
+        }
+
+        // Function to generate star ratings
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Function to filter products by category
+        function filterProducts(category) {
+            currentFilter = category;
+            renderProducts();
+        }
+
+        // Function to add items to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    originalPrice: product.originalPrice,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showToast(`${product.name} added to cart!`);
+        }
+
+        // Function to remove items from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+            showToast('Item removed from cart');
+        }
+
+        // Function to update cart quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        // Function to update cart display
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            cartItems.innerHTML = '';
+            let cartSubtotal = 0;
+            let totalDiscount = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    const itemOriginalTotal = item.originalPrice * item.quantity;
+                    cartSubtotal += itemTotal;
+                    totalDiscount += (itemOriginalTotal - itemTotal);
+                    
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <div style="width:100px;height:100px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;margin-right:15px;">
+                            <i class="fas fa-mobile-alt" style="font-size:2rem;color:#2874f0;"></i>
+                        </div>
+                        <div class="cart-item-details">
+                            <h3>${item.name}</h3>
+                            <div class="price">₹${item.price}</div>
+                            <div class="quantity">
+                                <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItemElement);
+                });
+            }
+            
+            // Update cart summary
+            const shipping = 50;
+            const taxAmount = cartSubtotal * 0.18; // 18% tax
+            const totalAmount = cartSubtotal + shipping + taxAmount - totalDiscount;
+            
+            subtotal.textContent = `₹${cartSubtotal}`;
+            tax.textContent = `₹${taxAmount.toFixed(2)}`;
+            discount.textContent = `-₹${totalDiscount}`;
+            total.textContent = `₹${totalAmount.toFixed(2)}`;
+            
+            // Update checkout summary
+            updateCheckoutSummary(cartSubtotal, shipping, taxAmount, totalDiscount, totalAmount);
+        }
+
+        // Function to update checkout summary
+        function updateCheckoutSummary(subtotalAmount, shipping, taxAmount, discountAmount, totalAmount) {
+            checkoutItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                checkoutItems.innerHTML = '<p>No items in cart</p>';
+            } else {
+                cart.forEach(item => {
+                    const checkoutItemElement = document.createElement('div');
+                    checkoutItemElement.className = 'cart-item';
+                    checkoutItemElement.innerHTML = `
+                        <div style="width:80px;height:80px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;margin-right:15px;">
+                            <i class="fas fa-mobile-alt" style="font-size:1.5rem;color:#2874f0;"></i>
+                        </div>
+                        <div>
+                            <h4>${item.name}</h4>
+                            <div>Qty: ${item.quantity}</div>
+                            <div>₹${item.price * item.quantity}</div>
+                        </div>
+                    `;
+                    checkoutItems.appendChild(checkoutItemElement);
+                });
+            }
+            
+            checkoutSubtotal.textContent = `₹${subtotalAmount}`;
+            checkoutShipping.textContent = `₹${shipping}`;
+            checkoutTax.textContent = `₹${taxAmount.toFixed(2)}`;
+            checkoutDiscount.textContent = `-₹${discountAmount}`;
+            checkoutTotal.textContent = `₹${totalAmount.toFixed(2)}`;
+        }
+
+        // Function to show toast notifications
+        function showToast(message) {
+            toast.textContent = message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Function to handle contact form submission
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Prepare template parameters
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                phone: phone,
+                subject: subject,
+                message: message,
+                reply_to: email
+            };
+            
+            console.log('Sending email with parameters:', templateParams);
+            
+            // Send email using EmailJS
+            emailjs.send('service_gl9rcal', 'template_4ch5rus', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showToast('✅ Your message has been sent successfully! We will get back to you soon.');
+                    document.getElementById('contactForm').reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    
+                    let errorMessage = 'Failed to send message. ';
+                    
+                    if (error.text) {
+                        if (error.text.includes('recipients address is empty')) {
+                            errorMessage = '❌ Email service not configured properly. Please check EmailJS service settings.';
+                        } else {
+                            errorMessage += error.text;
+                        }
+                    } else if (error.status === 0) {
+                        errorMessage += 'Network error. Please check your internet connection.';
+                    } else if (error.status === 400) {
+                        errorMessage += 'Invalid request parameters.';
+                    } else if (error.status === 401) {
+                        errorMessage += 'Invalid Public Key. Please check your EmailJS configuration.';
+                    } else {
+                        errorMessage += 'Please try again later.';
+                    }
+                    
+                    showToast(errorMessage);
+                    
+                    // Fallback: Create mailto link as backup
+                    setTimeout(() => {
+                        if(confirm('Email sending failed. Would you like to send the message directly via your email client?')) {
+                            const mailtoBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+                            const mailtoLink = `mailto:sabarishcse23@gmail.com?subject=Contact Form: ${subject}&body=${mailtoBody}`;
+                            window.location.href = mailtoLink;
+                        }
+                    }, 1000);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        }
+
+        // --- Authentication Functions using auth.js ---
+        let allAdminUsers = [];
+        let filteredAdminUsers = [];
+
+        function isLoggedIn() {
+            return auth.isLoggedIn();
+        }
+
+        function logout() {
+            auth.logout();
+            updateAuthUI();
+            showToast('Logged out successfully');
+            showPage('home');
+        }
+
+        function updateAuthUI() {
+            const authLink = document.getElementById('authLink');
+            const adminLink = document.getElementById('adminLink');
+            
+            if (authLink) {
+                if (isLoggedIn()) {
+                    const session = auth.getUserSession();
+                    authLink.innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout (${session ? session.name : ''})`;
+                    authLink.onclick = logout;
+                } else {
+                    authLink.innerHTML = '<i class="fas fa-user"></i> Login';
+                    authLink.onclick = function() { showPage('login'); };
+                }
+            }
+
+            // Show admin link if admin is logged in
+            if (adminLink) {
+                if (auth.isAdminLoggedIn()) {
+                    adminLink.style.display = 'block';
+                    adminLink.onclick = function() { showPage('admin-dashboard'); };
+                } else {
+                    adminLink.style.display = 'none';
+                }
+            }
+        }
+
+        // Switch between login and register tabs
+        function switchAuthTab(tab) {
+            // Update tab buttons
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach((t, index) => {
+                t.classList.remove('active');
+                if ((tab === 'login' && index === 0) || (tab === 'register' && index === 1)) {
+                    t.classList.add('active');
+                }
+            });
+            
+            // Update form containers
+            document.getElementById('loginFormContainer').classList.remove('active');
+            document.getElementById('registerFormContainer').classList.remove('active');
+            
+            if (tab === 'login') {
+                document.getElementById('loginFormContainer').classList.add('active');
+            } else {
+                document.getElementById('registerFormContainer').classList.add('active');
+            }
+            
+            hideAuthMessage();
+        }
+
+        // Show/hide auth messages
+        function showAuthMessage(text, type, messageId) {
+            const messageEl = document.getElementById(messageId || 'authMessage');
+            if (messageEl) {
+                messageEl.textContent = text;
+                messageEl.className = `auth-message ${type} show`;
+                setTimeout(() => {
+                    hideAuthMessage(messageId);
+                }, 5000);
+            }
+        }
+
+        function hideAuthMessage(messageId) {
+            const messageEl = document.getElementById(messageId || 'authMessage');
+            if (messageEl) {
+                messageEl.classList.remove('show');
+            }
+        }
+
+        // Handle user login
+        function handleUserLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (auth.login(email, password)) {
+                showAuthMessage('Login successful! Redirecting...', 'success');
+                updateAuthUI();
+                setTimeout(() => {
+                    showPage('home');
+                    document.getElementById('loginForm').reset();
+                }, 1500);
+            } else {
+                showAuthMessage('Invalid email or password. Please try again.', 'error');
+            }
+        }
+
+        // Handle user registration
+        function handleUserRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAuthMessage('Passwords do not match!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAuthMessage('Password must be at least 6 characters long!', 'error');
+                return;
+            }
+
+            if (auth.register(name, email, phone, password)) {
+                showAuthMessage('Account created successfully! Please login.', 'success');
+                setTimeout(() => {
+                    switchAuthTab('login');
+                    document.getElementById('loginEmail').value = email;
+                    document.getElementById('registerForm').reset();
+                }, 2000);
+            } else {
+                showAuthMessage('Email already exists! Please use a different email.', 'error');
+            }
+        }
+
+        // Handle admin login
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+
+            if (auth.adminLogin(email, password)) {
+                showAuthMessage('Admin login successful! Redirecting...', 'success', 'adminLoginMessage');
+                updateAuthUI();
+                setTimeout(() => {
+                    showPage('admin-dashboard');
+                    document.getElementById('adminLoginForm').reset();
+                    initAdminDashboard();
+                }, 1500);
+            } else {
+                showAuthMessage('Invalid email or password. Please try again.', 'error', 'adminLoginMessage');
+            }
+        }
+
+        // Handle admin logout
+        function handleAdminLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                auth.adminLogout();
+                updateAuthUI();
+                showToast('Admin logged out successfully');
+                showPage('home');
+            }
+        }
+
+        // Initialize admin dashboard
+        function initAdminDashboard() {
+            // Check if admin is logged in
+            if (!auth.isAdminLoggedIn()) {
+                showAuthMessage('Please login to access admin dashboard', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            // Verify admin session
+            const session = auth.getAdminSession();
+            if (!session || session.role !== 'admin') {
+                showAuthMessage('Invalid admin session! Please login again.', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            // Display admin name
+            if (session) {
+                document.getElementById('adminWelcome').textContent = `Welcome, ${session.name}`;
+            }
+
+            // Load users
+            loadAdminUsers();
+            updateAdminStats();
+        }
+
+        // Load all users for admin
+        function loadAdminUsers() {
+            allAdminUsers = auth.getUsers();
+            filteredAdminUsers = [...allAdminUsers];
+            renderAdminUsers();
+        }
+
+        // Render users table
+        function renderAdminUsers() {
+            const tbody = document.getElementById('adminUsersTableBody');
+            
+            if (filteredAdminUsers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding:40px; color:#999;">
+                            <i class="fas fa-users" style="font-size:48px; margin-bottom:10px; display:block; color:#ddd;"></i>
+                            <p>No users found</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredAdminUsers.map((user, index) => {
+                const createdDate = new Date(user.createdAt);
+                const formattedDate = createdDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${escapeHtml(user.name)}</td>
+                        <td>${escapeHtml(user.email)}</td>
+                        <td>${escapeHtml(user.phone)}</td>
+                        <td>${formattedDate}</td>
+                        <td>
+                            <button class="admin-action-btn admin-btn-view" onclick="showAdminProfile('${user.id}')" title="View full profile details">
+                                <i class="fas fa-eye"></i> Show Profile
+                            </button>
+                            <button class="admin-action-btn admin-btn-delete" onclick="deleteAdminUser('${user.id}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button class="admin-action-btn admin-btn-copy" onclick="copyAdminUserRow(this)" title="Copy next row or create a new blank row">
+                                <i class="fas fa-copy"></i> Copy Next Row
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filter users
+        function filterAdminUsers() {
+            const searchTerm = document.getElementById('adminSearchBox').value.toLowerCase();
+            
+            if (!searchTerm) {
+                filteredAdminUsers = [...allAdminUsers];
+            } else {
+                filteredAdminUsers = allAdminUsers.filter(user => 
+                    user.name.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.phone.includes(searchTerm)
+                );
+            }
+            
+            renderAdminUsers();
+        }
+
+        // Show user profile with authentication
+        function showAdminProfile(userId) {
+            // Full authentication check
+            if (!auth.isAdminLoggedIn()) {
+                showAuthMessage('Session expired! Please login again.', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            const adminSession = auth.getAdminSession();
+            if (!adminSession || adminSession.role !== 'admin') {
+                showAuthMessage('Unauthorized access! Admin authentication required.', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            const user = auth.getUserById(userId);
+            
+            if (!user) {
+                showAuthMessage('User not found!', 'error', 'adminMessage');
+                return;
+            }
+
+            const createdDate = new Date(user.createdAt);
+            const updatedDate = new Date(user.updatedAt);
+            const accountAge = Math.floor((new Date() - createdDate) / (1000 * 60 * 60 * 24));
+            
+            const profileHTML = `
+                <div class="profile-detail-item" style="background: linear-gradient(135deg, var(--primary), #1a5dc7); color: white; padding: 20px; border-radius: 8px;">
+                    <label style="color: rgba(255,255,255,0.9);">User ID</label>
+                    <div class="value" style="color: white; font-size: 18px; font-weight: bold;">${escapeHtml(user.id)}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Full Name</label>
+                    <div class="value" style="font-size: 18px; font-weight: 600; color: var(--primary);">${escapeHtml(user.name)}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Email Address</label>
+                    <div class="value">${escapeHtml(user.email)}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Phone Number</label>
+                    <div class="value">${escapeHtml(user.phone)}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Account Created</label>
+                    <div class="value">${createdDate.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        timeZoneName: 'short'
+                    })}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Last Updated</label>
+                    <div class="value">${updatedDate.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        timeZoneName: 'short'
+                    })}</div>
+                </div>
+                <div class="profile-detail-item">
+                    <label>Account Age</label>
+                    <div class="value">${accountAge} day${accountAge !== 1 ? 's' : ''} old</div>
+                </div>
+                <div class="profile-detail-item" style="background: #f8f9fa; border-left: 4px solid #28a745;">
+                    <label>Account Status</label>
+                    <div class="value" style="color: #28a745; font-weight: 600;">
+                        <i class="fas fa-check-circle"></i> Active
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('profileDetails').innerHTML = profileHTML;
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        // Close profile modal
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        // Delete user with authentication
+        function deleteAdminUser(userId) {
+            // Full authentication check
+            if (!auth.isAdminLoggedIn()) {
+                showAuthMessage('Session expired! Please login again.', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            const adminSession = auth.getAdminSession();
+            if (!adminSession || adminSession.role !== 'admin') {
+                showAuthMessage('Unauthorized access! Admin authentication required.', 'error', 'adminMessage');
+                setTimeout(() => {
+                    showPage('admin-login');
+                }, 2000);
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                return;
+            }
+
+            if (auth.deleteUser(userId)) {
+                showAuthMessage('User deleted successfully!', 'success', 'adminMessage');
+                loadAdminUsers();
+                updateAdminStats();
+            } else {
+                showAuthMessage('Failed to delete user!', 'error', 'adminMessage');
+            }
+        }
+
+        // Safely copy the next table row (or create a blank row) when user clicks the copy button
+        // This prevents errors when nextElementSibling is null and provides a safe fallback.
+        function copyAdminUserRow(buttonEl) {
+            try {
+                if (!buttonEl) return;
+                const row = buttonEl.closest('tr');
+                if (!row) {
+                    showAuthMessage('Unable to locate the row to copy.', 'error', 'adminMessage');
+                    return;
+                }
+
+                const tbody = row.parentNode;
+                const nextRow = row.nextElementSibling;
+
+                let newRow;
+                if (nextRow) {
+                    // Clone the next row to preserve layout/content
+                    newRow = nextRow.cloneNode(true);
+                    // Remove any duplicate IDs inside the cloned row to avoid collisions
+                    newRow.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+                    // Insert after the nextRow
+                    tbody.insertBefore(newRow, nextRow.nextSibling);
+                } else {
+                    // No next row — create an empty row with same number of cells
+                    newRow = document.createElement('tr');
+                    const cellsCount = row.children.length;
+                    for (let i = 0; i < cellsCount; i++) {
+                        const td = document.createElement('td');
+                        // For the first column (#) put the new index
+                        if (i === 0) {
+                            const currentCount = tbody.querySelectorAll('tr').length;
+                            td.textContent = currentCount + 1;
+                        } else if (i === cellsCount - 1) {
+                            // Actions column: add minimal action buttons so the row is interactive
+                            td.innerHTML = `
+                                <button class="admin-action-btn admin-btn-view" onclick="showAdminProfile('')" title="Show Profile"><i class="fas fa-eye"></i> Show Profile</button>
+                                <button class="admin-action-btn admin-btn-delete" onclick="deleteAdminUser('')"><i class="fas fa-trash"></i> Delete</button>
+                                <button class="admin-action-btn admin-btn-copy" onclick="copyAdminUserRow(this)"><i class="fas fa-copy"></i> Copy Next Row</button>
+                            `;
+                        } else {
+                            td.innerHTML = '&nbsp;';
+                        }
+                        newRow.appendChild(td);
+                    }
+                    tbody.insertBefore(newRow, row.nextSibling);
+                }
+
+                // Re-number first column to keep indices consistent
+                tbody.querySelectorAll('tr').forEach((r, idx) => {
+                    const firstCell = r.querySelector('td');
+                    if (firstCell) firstCell.textContent = idx + 1;
+                });
+
+                showAuthMessage('Row copied/created successfully.', 'success', 'adminMessage');
+            } catch (error) {
+                console.error('Error in copyAdminUserRow:', error);
+                showAuthMessage('An error occurred while copying the row. Check console for details.', 'error', 'adminMessage');
+            }
+        }
+
+        // Update admin statistics
+        function updateAdminStats() {
+            const stats = auth.getStats();
+            document.getElementById('adminTotalUsers').textContent = stats.total;
+            document.getElementById('adminNewUsers').textContent = stats.newThisMonth;
+            document.getElementById('adminTodayUsers').textContent = stats.today;
+        }
+
+        // Escape HTML to prevent XSS
+        // Robust: handle undefined/null and non-string inputs by coercing to string
+        function escapeHtml(text) {
+            const safe = text == null ? '' : String(text);
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return safe.replace(/[&<>\"']/g, m => map[m]);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('profileModal');
+            if (e.target === modal) {
+                closeProfileModal();
+            }
+        });
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            
+            // Get customer details
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const phone = document.getElementById('phone').value;
+            
+            // Create order
+            const order = {
+                id: 'ORD' + Date.now(),
+                date: new Date().toLocaleDateString(),
+                items: [...cart],
+                customer: {
+                    firstName,
+                    lastName,
+                    address,
+                    city,
+                    state,
+                    pincode,
+                    phone
+                },
+                total: document.getElementById('checkoutTotal').textContent,
+                status: 'pending'
+            };
+            
+            // Add to orders
+            orders.unshift(order);
+            
+            // Send order to WhatsApp
+            sendOrderToWhatsApp(order);
+            
+            // Reset cart
+            cart = [];
+            updateCart();
+            
+            // Reset form
+            document.getElementById('checkoutForm').reset();
+            
+            // Show success message
+            showToast('Order sent to WhatsApp successfully! We will contact you soon.');
+            
+            // Return to home page
+            setTimeout(() => {
+                showPage('home');
+            }, 2000);
+        }
+
+        // Function to send order to WhatsApp
+        function sendOrderToWhatsApp(order) {
+            const phoneNumber = "918124476063";
+            
+            // Format order details for WhatsApp message
+            let message = `*NEW ORDER - Tamil Mobiles*%0A%0A`;
+            message += `*Order ID:* ${order.id}%0A`;
+            message += `*Customer:* ${order.customer.firstName} ${order.customer.lastName}%0A`;
+            message += `*Phone:* ${order.customer.phone}%0A`;
+            message += `*Address:* ${order.customer.address}, ${order.customer.city}, ${order.customer.state} - ${order.customer.pincode}%0A%0A`;
+            message += `*Order Items:*%0A`;
+            
+            order.items.forEach(item => {
+                message += `- ${item.name} (Qty: ${item.quantity}) - ₹${item.price * item.quantity}%0A`;
+            });
+            
+            message += `%0A*Subtotal:* ₹${parseInt(order.total.replace('₹', '')) - 50 - (parseInt(order.total.replace('₹', '')) * 0.18)}%0A`;
+            message += `*Shipping:* ₹50%0A`;
+            message += `*Tax:* ₹${(parseInt(order.total.replace('₹', '')) * 0.18).toFixed(2)}%0A`;
+            message += `*Total:* ${order.total}%0A%0A`;
+            message += `*Payment Method:* Cash on Delivery%0A%0A`;
+            message += `Please confirm this order and arrange delivery.`;
+            
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(url, '_blank');
+        }
+
+        // Function to render orders
+        function renderOrders() {
+            ordersContainer.innerHTML = '';
+            
+            if (orders.length === 0) {
+                ordersContainer.innerHTML = '<p>You have no orders yet.</p>';
+                return;
+            }
+            
+            orders.forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.className = 'order-card';
+                
+                let itemsHTML = '';
+                order.items.forEach(item => {
+                    itemsHTML += `
+                        <div class="order-item">
+                            <div class="order-item-img">
+                                <i class="fas fa-mobile-alt" style="font-size:1.5rem;color:#2874f0;"></i>
+                            </div>
+                            <div class="order-item-details">
+                                <h4>${item.name}</h4>
+                                <div>Qty: ${item.quantity}</div>
+                                <div class="order-item-price">₹${item.price * item.quantity}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                orderElement.innerHTML = `
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id}</div>
+                            <div class="order-date">Placed on ${order.date}</div>
+                        </div>
+                        <div class="order-status ${order.status === 'pending' ? 'status-processing' : order.status === 'shipped' ? 'status-shipped' : 'status-delivered'}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        ${itemsHTML}
+                    </div>
+                    <div class="order-summary-section">
+                        <div>Total Amount</div>
+                        <div class="order-total">${order.total}</div>
+                    </div>
+                `;
+                
+                ordersContainer.appendChild(orderElement);
+            });
+        }
+    </script>
+</body>
+</html>
