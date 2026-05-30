@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2630,6 +2630,166 @@
                 padding: 4px 8px;
                 font-size: 10px;
             }
+
+            /* Bottom Navigation 5-Item Optimization */
+            .bottom-nav-item {
+                min-width: 50px !important;
+                padding: 4px 6px !important;
+                font-size: 10px !important;
+            }
+            .bottom-nav-item i {
+                font-size: 16px !important;
+                margin-bottom: 2px !important;
+            }
+
+            /* Cart & Checkout Stacking */
+            .cart-container,
+            .checkout-container {
+                flex-direction: column !important;
+                gap: 16px !important;
+            }
+            .cart-items,
+            .cart-summary,
+            .checkout-form,
+            .order-summary {
+                width: 100% !important;
+                flex: none !important;
+            }
+
+            /* Form Row & Groups stacking */
+            .form-row {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .form-row .form-group {
+                width: 100% !important;
+                margin-bottom: 5px !important;
+            }
+
+            /* Timeline 1-column responsive layout */
+            .timeline::after {
+                left: 31px !important;
+            }
+            .timeline-item {
+                width: 100% !important;
+                left: 0 !important;
+                padding-left: 55px !important;
+                padding-right: 15px !important;
+                margin-bottom: 20px !important;
+            }
+            .timeline-item:nth-child(even) {
+                left: 0 !important;
+            }
+            .timeline-item::after {
+                left: 21px !important;
+            }
+            .timeline-item:nth-child(odd)::after {
+                right: auto !important;
+                left: 21px !important;
+            }
+
+            /* Admin Dashboard overrides */
+            .admin-header {
+                margin: -10px -10px 15px -10px !important;
+                padding: 15px !important;
+                border-radius: 0 !important;
+            }
+            .admin-header > div {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                text-align: center !important;
+            }
+            .admin-header .btn {
+                width: 100% !important;
+                margin-right: 0 !important;
+                margin-bottom: 8px !important;
+            }
+            .admin-header .btn:last-child {
+                margin-bottom: 0 !important;
+            }
+            #adminNotifications {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+            }
+            #adminNotifications > div {
+                width: 100% !important;
+            }
+            .admin-section-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+            }
+            .admin-section-header > div {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+            .admin-section-header .btn {
+                width: 100% !important;
+            }
+
+            /* Compact Flipkart-like Product Grid Cards */
+            .products {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                padding: 8px !important;
+            }
+            .product {
+                padding: 8px !important;
+                border-radius: 4px !important;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+            }
+            .product .product-img {
+                height: 100px !important;
+                margin-bottom: 6px !important;
+                border-radius: 4px !important;
+            }
+            .product h3 {
+                font-size: 12px !important;
+                height: 32px !important;
+                margin-bottom: 4px !important;
+                line-height: 1.3 !important;
+                font-weight: 500 !important;
+            }
+            .product .price {
+                font-size: 13px !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 4px !important;
+                justify-content: center !important;
+                margin-bottom: 4px !important;
+            }
+            .product .original-price {
+                font-size: 11px !important;
+                margin-right: 0 !important;
+            }
+            .product .discount {
+                font-size: 10px !important;
+                font-weight: bold !important;
+                display: block !important;
+                width: 100% !important;
+            }
+            .product .rating {
+                font-size: 10px !important;
+                margin-bottom: 6px !important;
+            }
+            .product-actions {
+                flex-direction: column !important;
+                gap: 4px !important;
+            }
+            .product button {
+                width: 100% !important;
+                padding: 6px 2px !important;
+                font-size: 11px !important;
+                border-radius: 3px !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2783,15 +2943,15 @@
 
     <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobileNav">
-        <a onclick="showPage('home'); toggleMobileMenu()"><i class="fas fa-home"></i> Home</a>
-        <a onclick="showPage('offers'); toggleMobileMenu()"><i class="fas fa-tags"></i> Offers</a>
-        <a onclick="showPage('about'); toggleMobileMenu()"><i class="fas fa-info-circle"></i> About</a>
-        <a onclick="showPage('contact'); toggleMobileMenu()"><i class="fas fa-envelope"></i> Contact</a>
-        <a onclick="showPage('orders'); toggleMobileMenu()"><i class="fas fa-shopping-bag"></i> My Orders</a>
-        <a id="mobileAuthLink" onclick="showPage('login'); toggleMobileMenu()"><i class="fas fa-user"></i> Login</a>
-        <a id="mobileAdminLink" onclick="showPage('admin-login'); toggleMobileMenu()" style="display:none;"><i
+        <a onclick="showPage('home')"><i class="fas fa-home"></i> Home</a>
+        <a onclick="showPage('offers')"><i class="fas fa-tags"></i> Offers</a>
+        <a onclick="showPage('about')"><i class="fas fa-info-circle"></i> About</a>
+        <a onclick="showPage('contact')"><i class="fas fa-envelope"></i> Contact</a>
+        <a onclick="showPage('orders')"><i class="fas fa-shopping-bag"></i> My Orders</a>
+        <a id="mobileAuthLink" onclick="showPage('login')"><i class="fas fa-user"></i> Login</a>
+        <a id="mobileAdminLink" onclick="showPage('admin-login')" style="display:none;"><i
                 class="fas fa-user-shield"></i> Admin</a>
-        <a onclick="showPage('cart'); toggleMobileMenu()" class="cart-icon">
+        <a onclick="showPage('cart')" class="cart-icon">
             <i class="fas fa-shopping-cart"></i> Cart
             <span class="cart-count" id="mobileCartCount">0</span>
         </a>
@@ -3367,20 +3527,23 @@
                     </div>
                 </div>
 
-                <table class="admin-users-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Registered Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminUsersTableBody">
-                        <!-- Users will be loaded here -->
-                </table>
+                <div style="overflow-x:auto; -webkit-overflow-scrolling: touch;">
+                    <table class="admin-users-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Registered Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Orders Section -->
@@ -3655,15 +3818,18 @@
                 <i class="fas fa-percentage"></i>
                 <span>Offers</span>
             </a>
-            <a onclick="showPage('login')" class="bottom-nav-item" id="nav-account">
-                <i class="fas fa-user"></i>
-                <span>Account</span>
+            <a onclick="showPage('orders')" class="bottom-nav-item" id="nav-orders">
+                <i class="fas fa-shopping-bag"></i>
+                <span>Orders</span>
             </a>
             <a onclick="showPage('cart')" class="bottom-nav-item cart-item" id="nav-cart">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Cart</span>
+                <span class="cart-badge" id="bottomNavCartCount" style="display: none;">0</span>
+            </a>
+            <a onclick="showPage('login')" class="bottom-nav-item" id="bottomNavProfile">
                 <i class="fas fa-user"></i>
-                <span>Profile</span>
+                <span>Account</span>
             </a>
         </div>
     </nav>
@@ -4586,25 +4752,27 @@
             renderProducts(filtered);
         }
 
-        // Update bottom navigation active state
-        function updateBottomNav(activePage) {
-            const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
-            bottomNavItems.forEach(item => {
+        // Update Bottom Navigation Active State
+        function updateBottomNav(pageId) {
+            // Remove active class from all
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
                 item.classList.remove('active');
             });
 
-            // Map page IDs to bottom nav items
-            const pageMap = {
-                'home': 0,
-                'offers': 1,
-                'cart': 2,
-                'orders': 3,
-                'profile': 4,
-                'login': 4
+            // Add active class based on page ID
+            const navMap = {
+                'home': 'nav-home',
+                'offers': 'nav-offers',
+                'orders': 'nav-orders',
+                'cart': 'nav-cart',
+                'login': 'bottomNavProfile',
+                'profile': 'bottomNavProfile'
             };
 
-            if (pageMap[activePage] !== undefined) {
-                bottomNavItems[pageMap[activePage]].classList.add('active');
+            const activeId = navMap[pageId];
+            if (activeId) {
+                const el = document.getElementById(activeId);
+                if (el) el.classList.add('active');
             }
         }
 
@@ -4620,30 +4788,6 @@
                 } else {
                     bottomNavCartCount.style.display = 'flex';
                 }
-            }
-        }
-
-        // Update Bottom Navigation Active State
-        function updateBottomNav(pageId) {
-            // Remove active class from all
-            document.querySelectorAll('.bottom-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // Add active class based on page
-            const navMap = {
-                'home': 'nav-home',
-                'offers': 'nav-offers',
-                'cart': 'nav-cart',
-                'login': 'nav-account',
-                'profile': 'nav-account',
-                'orders': 'nav-account'
-            };
-
-            const activeId = navMap[pageId];
-            if (activeId) {
-                const el = document.getElementById(activeId);
-                if (el) el.classList.add('active');
             }
         }
 
@@ -5113,10 +5257,10 @@
                 if (isLoggedIn()) {
                     const session = auth.getUserSession();
                     mobileAuthLink.innerHTML = `<i class="fas fa-user-circle"></i> ${session ? session.name : 'Profile'}`;
-                    mobileAuthLink.onclick = function () { loadUserProfile(); showPage('profile'); toggleMobileMenu(); };
+                    mobileAuthLink.onclick = function () { loadUserProfile(); showPage('profile'); };
                 } else {
                     mobileAuthLink.innerHTML = '<i class="fas fa-user"></i> Login';
-                    mobileAuthLink.onclick = function () { showPage('login'); toggleMobileMenu(); };
+                    mobileAuthLink.onclick = function () { showPage('login'); };
                 }
             }
 
@@ -5134,7 +5278,7 @@
             if (mobileAdminLink) {
                 if (auth.isAdminLoggedIn()) {
                     mobileAdminLink.style.display = 'block';
-                    mobileAdminLink.onclick = function () { showPage('admin-dashboard'); toggleMobileMenu(); };
+                    mobileAdminLink.onclick = function () { showPage('admin-dashboard'); };
                 } else {
                     mobileAdminLink.style.display = 'none';
                 }
